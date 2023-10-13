@@ -32,11 +32,13 @@ async function run() {
         await client.connect();
 
         const database = client.db("userDB");
-        const haiku = database.collection("user");
+        const userCollection = database.collection("user");
 
         app.post('/user', async(req, res) => {
             const user = req.body;
             console.log('new user', user);
+            const result = await userCollection.insertOne(user);
+            res.send(result);
         });
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
