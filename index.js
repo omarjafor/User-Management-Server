@@ -30,9 +30,17 @@ async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
+
+        const database = client.db("userDB");
+        const haiku = database.collection("user");
+
+        app.post('/user', async(req, res) => {
+            const user = req.body;
+            console.log('new user', user);
+        });
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        console.log("You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();
@@ -49,14 +57,14 @@ app.get('/user', (req, res) => {
     res.send(user)
 })
 
-app.post('/user', (req, res) => {
-    console.log('Post Api Hitting...')
-    console.log(req.body);
-    const newUser = req.body;
-    newUser.id = user.length + 1
-    user.push(newUser);
-    res.send(newUser);
-})
+// app.post('/user', (req, res) => {
+//     console.log('Post Api Hitting...')
+//     console.log(req.body);
+//     const newUser = req.body;
+//     newUser.id = user.length + 1
+//     user.push(newUser);
+//     res.send(newUser);
+// })
 
 app.listen(port, () => {
     console.log(`Server is running on PORT : ${port}`)
