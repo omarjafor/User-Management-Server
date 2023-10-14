@@ -56,14 +56,14 @@ async function run() {
 
         app.put('/users/:id', async(req, res) => {
             const id = req.params.id;
-            const updatedUser = req.body;
-            console.log(updatedUser);
+            const updatedInfo = req.body;
+            console.log(updatedInfo);
             const filter = {_id: new ObjectId(id)}
             const options = {upsert: true}
             const changeUser = {
                 $set: {
-                    name: updatedUser.name,
-                    email: updatedUser.email
+                    name: updatedInfo.name,
+                    email: updatedInfo.email
                 }
             }
 
